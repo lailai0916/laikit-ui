@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.1.1
+
+- Preserve selected Segmented and WindowPanel backgrounds on hover in system dark mode.
+- Keep WindowPanel tab and toggle hover text consistent with explicit dark mode.
+
 ## 0.1.0
 
 - Extract 26 React components and shared hooks, formatters, and design tokens from lailai's Home.

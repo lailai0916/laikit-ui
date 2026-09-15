@@ -172,12 +172,13 @@
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme='light']) .tab:hover {
     background-color: rgba(255, 255, 255, 0.06);
+    color: var(--lk-color-content);
   }
 }
 
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme='light']) .tabActive,
-  [data-theme='dark'] .tabActive:hover {
+  :root:not([data-theme='light']) .tabActive:hover {
     background-color: rgba(255, 255, 255, 0.1);
     border-color: rgba(255, 255, 255, 0.14);
   }
@@ -192,5 +193,6 @@
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme='light']) .toggle:hover {
     background-color: rgba(255, 255, 255, 0.06);
+    color: var(--lk-color-content);
   }
 }

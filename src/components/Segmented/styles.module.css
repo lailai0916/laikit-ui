@@ -173,7 +173,7 @@ html[data-theme='dark'] .itemActive:hover {
 
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme='light']) .itemActive,
-  html[data-theme='dark'] .itemActive:hover {
+  :root:not([data-theme='light']) .itemActive:hover {
     background: var(--lk-color-emphasis-200);
     color: var(--lk-color-primary-light);
   }

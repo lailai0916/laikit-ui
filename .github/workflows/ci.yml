@@ -5,6 +5,7 @@ on:
     branches: [main]
     tags: ['v*']
   pull_request:
+  workflow_dispatch:
 
 permissions:
   contents: read
@@ -14,6 +15,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v7
+        with:
+          persist-credentials: false
       - uses: actions/setup-node@v4
         with:
           node-version: '24'
@@ -29,3 +32,35 @@ jobs:
           persist-credentials: false
       - name: Validate repository standards
         run: python3 scripts/validate-standards.py .repository-standards/scripts/check_repository.py
+
+  publish:
+    needs: validate
+    if: >-
+      github.repository == 'lailai0916/laikit-ui' &&
+      github.ref == 'refs/heads/main' &&
+      (github.event_name == 'push' || github.event_name == 'workflow_dispatch')
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    permissions:
+      contents: read
+      id-token: write
+    concurrency:
+      group: npm-publish
+      cancel-in-progress: false
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v6
+        with:
+          node-version: '24'
+          registry-url: https://registry.npmjs.org
+          package-manager-cache: false
+      - name: Check npm release status
+        id: release
+        run: node scripts/check-release.mjs
+      - run: npm ci
+        if: steps.release.outputs.publish == 'true'
+      - name: Publish to npm with OIDC
+        if: steps.release.outputs.publish == 'true'
+        run: npm publish --access public --registry=https://registry.npmjs.org

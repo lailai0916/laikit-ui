@@ -62,7 +62,7 @@ For a direct component import, use `import Button from '@lailai0916/ui/Button'`.
 laikit-ui/
 ├── demo/                           # Standalone React examples
 ├── docs/                           # Integration and release guides
-├── scripts/                        # Build helpers
+├── scripts/                        # Build and release helpers
 ├── src/                            # Components, theme, and adapters
 ├── tests/                          # Package and SSR tests
 ├── package.json                    # Dependencies, exports, and commands
@@ -94,6 +94,8 @@ npm run check
 ```
 
 `npm run check` verifies formatting, lint, types, the distributable, server rendering tests, and the demo build. `npm run build` writes the package to `dist/`; `npm run build:demo` writes the examples to `demo-dist/`. See [release instructions](docs/releasing.md) and [contribution guidelines](.github/CONTRIBUTING.md).
+
+Pushing to `main` automatically publishes a new stable package version after validation, using npm Trusted Publishing. Update the version in `package.json` and `package-lock.json` and add a changelog entry before pushing. Already published versions are skipped. Consumer websites update their dependency and redeploy separately.
 
 ## License
 

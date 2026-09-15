@@ -62,7 +62,7 @@ export function App() {
 laikit-ui/
 ├── demo/                           # 独立 React 示例
 ├── docs/                           # 接入和发布指南
-├── scripts/                        # 构建辅助脚本
+├── scripts/                        # 构建和发布辅助脚本
 ├── src/                            # 组件、主题与适配层
 ├── tests/                          # 包入口与 SSR 测试
 ├── package.json                    # 依赖、入口和命令
@@ -94,6 +94,8 @@ npm run check
 ```
 
 `npm run check` 验证格式、lint、类型、发布产物、服务端渲染测试和示例构建。`npm run build` 将包输出到 `dist/`；`npm run build:demo` 将示例输出到 `demo-dist/`。另见[发布说明](docs/releasing.md)和[贡献指南](.github/CONTRIBUTING.md)。
+
+推送到 `main` 后，通过验证的新稳定版本会经 npm Trusted Publishing 自动发布。推送前同步更新 `package.json` 和 `package-lock.json` 的版本号，并补充更新日志。已经发布的版本会跳过；各网站仍需更新依赖并重新部署。
 
 ## 许可协议
 

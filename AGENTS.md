@@ -22,6 +22,16 @@ published files. See `docs/releasing.md` for releases. Run checks before committ
 - `src/hooks/` and `src/utils/` contain public, framework-neutral helpers.
 - `demo/` exercises all public components without a framework adapter.
 - `tests/` verifies server rendering, localization, semantics, and package boundaries.
+- `scripts/check-release.mjs` checks registry versions before automatic publishing.
+
+## Publishing
+
+After validation, `.github/workflows/ci.yml` publishes an unpublished stable version on pushes to
+`main` or manual dispatches on `main`, using npm Trusted Publishing. Existing versions are skipped;
+registry failures and unpublished versions older than `latest` fail. Pull requests and tags never
+publish. Bump `package.json` and `package-lock.json` together and update `CHANGELOG.md` for each release.
+The npm connection names `lailai0916/laikit-ui` and `ci.yml`, with direct publishing allowed and no
+environment. Keep that binding aligned with workflow changes. Do not add npm tokens to CI.
 
 ## Conventions
 

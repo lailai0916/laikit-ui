@@ -4,6 +4,7 @@
 
 - Preserve selected Segmented and WindowPanel backgrounds on hover in system dark mode.
 - Keep WindowPanel tab and toggle hover text consistent with explicit dark mode.
+- Publish new stable versions automatically from `main` through npm Trusted Publishing.
 
 ## 0.1.0
 

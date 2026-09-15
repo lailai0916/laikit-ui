@@ -1,0 +1,51 @@
+.iconBlock {
+  flex-shrink: 0;
+  width: var(--icon-block-size, 40px);
+  height: var(--icon-block-size, 40px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 12px;
+  line-height: 1;
+  overflow: hidden;
+}
+
+/* Primary-tinted variant for highlighted/feature icons. Flat tint (no
+   gradient) per the design rule — reads as one calm surface, Apple-style. */
+.accent {
+  background: color-mix(in srgb, var(--lk-color-primary) 12%, transparent);
+  color: var(--lk-color-primary);
+  border: 1px solid color-mix(in srgb, var(--lk-color-primary) 18%, transparent);
+}
+
+html[data-theme='dark'] .accent {
+  background: color-mix(in srgb, var(--lk-color-primary) 16%, transparent);
+  color: var(--lk-color-primary-light);
+  border-color: color-mix(in srgb, var(--lk-color-primary) 28%, transparent);
+}
+
+/* Neutral variant for stat/metric icons. */
+.muted {
+  background: var(--lk-color-emphasis-100);
+  color: var(--lk-color-emphasis-600);
+}
+
+html[data-theme='dark'] .muted {
+  background: var(--lk-color-emphasis-200);
+  color: var(--lk-color-emphasis-600);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme='light']) .accent {
+    background: color-mix(in srgb, var(--lk-color-primary) 16%, transparent);
+    color: var(--lk-color-primary-light);
+    border-color: color-mix(in srgb, var(--lk-color-primary) 28%, transparent);
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme='light']) .muted {
+    background: var(--lk-color-emphasis-200);
+    color: var(--lk-color-emphasis-600);
+  }
+}

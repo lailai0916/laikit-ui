@@ -1,66 +1,100 @@
 <div align="center">
-  <h1>lailai-template</h1>
+  <h1>laikit UI</h1>
   <p><a href="README.md">English</a> · <strong>简体中文</strong></p>
   <p>
-    <img src="https://img.shields.io/github/actions/workflow/status/lailai0916/lailai-template/ci.yml?branch=main&style=flat-square" />
-    <img src="https://img.shields.io/github/last-commit/lailai0916/lailai-template?style=flat-square" />
-    <img src="https://img.shields.io/github/languages/top/lailai0916/lailai-template?style=flat-square" />
-    <img src="https://img.shields.io/github/repo-size/lailai0916/lailai-template?style=flat-square" />
+    <img src="https://img.shields.io/github/actions/workflow/status/lailai0916/laikit-ui/ci.yml?branch=main&style=flat-square" />
+    <img src="https://img.shields.io/npm/v/@lailai0916/ui?style=flat-square" />
+    <img src="https://img.shields.io/github/last-commit/lailai0916/laikit-ui?style=flat-square" />
+    <img src="https://img.shields.io/github/languages/top/lailai0916/laikit-ui?style=flat-square" />
+    <img src="https://img.shields.io/github/repo-size/lailai0916/laikit-ui?style=flat-square" />
     <img src="https://img.shields.io/badge/code_style-prettier-ff69b4?style=flat-square" />
-    <img src="https://img.shields.io/github/license/lailai0916/lailai-template?style=flat-square" />
+    <img src="https://img.shields.io/github/license/lailai0916/laikit-ui?style=flat-square" />
   </p>
 </div>
 
 ## 项目简介
 
-开箱即用的 GitHub 仓库模板，统一维护仓库标准、初始化指南、双语 README 示例与校验工具。
+laikit UI 是从 [lailai's Home](https://lailai.one) 抽出的共享 React 组件库，以 `@lailai0916/ui` 发布。
 
 ## 项目特性
 
-📄 **统一标准** — [SETUP.md](SETUP.md) 集中维护仓库命名、README、GitHub About、工程配置与验收要求。
+🧩 **共享组件** — 26 个组件覆盖卡片、控件、图表、导航和窗口面板，提供 TypeScript 类型声明与按组件导入入口。
 
-🗺️ **持续维护** — 新项目保留简短的上游规范入口；初始化文档验收后清理，后续仍可查阅标准。
+🎨 **统一主题** — 共用 CSS 变量、深浅配色及减少动画支持，让多个网站保持一致。
 
-🧪 **集中校验** — Python 检查器可直接验证外部项目，规范与检查逻辑只在模板维护。
+🔌 **框架适配** — 原生链接和标题无需 Docusaurus 即可使用；需要时可通过 `LaikitProvider` 接入宿主路由、标题渲染和翻译。
 
-📮 **可用配置** — 提供双语文档、协作表单、Git 默认配置、Prettier 和 Agent 项目地图。
+🌐 **中英双语** — 内置英文和简体中文，覆盖组件库自身的标签；应用内容由调用方传入。
 
 ## 快速开始
 
-点击 **Use this template** 创建仓库，完整阅读 [初始化指南](SETUP.md)，按实际项目替换内容并验收：
+支持 React 18.3.1 和 React 19。开发需要 Node.js 20.19+；CI 使用 Node.js 24。
 
 ```bash
-npm ci --ignore-scripts
-npm run format:check
-python3 scripts/check_repository.py --root . --initializing
-python3 scripts/check_repository.py --root . --initializing --github
+npm install @lailai0916/ui react react-dom
 ```
 
-`--github` 使用 GitHub CLI 只读核对远端元数据。实际功能、翻译与部署仍需相应检查。
+```tsx
+import { Button, LaikitProvider, TitleCard } from '@lailai0916/ui';
+import '@lailai0916/ui/theme.css';
+import '@lailai0916/ui/styles.css';
 
-验收后删除新项目继承的 `SETUP.md`，保留上游链接，并将持续校验切换至模板的固定版本。
-模板源仓库永久保留指南与测试。已有仓库维护同样查阅该指南，无需复制规范正文。
+export function App() {
+  return (
+    <LaikitProvider locale="zh-Hans">
+      <TitleCard title="欢迎">
+        <Button onClick={() => alert('你好！')}>打个招呼</Button>
+      </TitleCard>
+    </LaikitProvider>
+  );
+}
+```
+
+在应用入口按上述顺序各导入一次 CSS。组件库不安装全局 CSS reset，也不覆盖宿主的正文字体。请在应用中设置基础排版和 `box-sizing`；主题提供 `--lk-font-family`、`--lk-font-size` 和 `--lk-line-height` 默认值。
+
+在 `<html>` 上设置 `data-theme="light"` 或 `data-theme="dark"` 选择主题；未指定时，配色跟随系统。导入组件库后覆盖 `--lk-*` 变量即可定制颜色。
+
+按组件导入可写为 `import Button from '@lailai0916/ui/Button'`。`Page` 和 `Markdown` 子路径使用具名导出；所有组件也都支持从包根入口具名导入。
 
 ## 项目结构
 
 ```bash
-lailai-template/
-├── scripts/                        # 通用仓库校验工具
-├── tests/                          # 迁移与初始化回归测试
-├── package.json                    # 格式化命令与依赖
-└── SETUP.md                        # 仓库标准与初始化指南
+laikit-ui/
+├── demo/                           # 独立 React 示例
+├── docs/                           # 接入和发布指南
+├── scripts/                        # 构建辅助脚本
+├── src/                            # 组件、主题与适配层
+├── tests/                          # 包入口与 SSR 测试
+├── package.json                    # 依赖、入口和命令
+└── vite.config.ts                  # ESM 与 CSS 构建
 ```
 
-## 校验
+## 组件清单
+
+| 分类 | 导出                                                                                                                                |
+| ---- | ----------------------------------------------------------------------------------------------------------------------------------- |
+| 布局 | `Card`, `TitleCard`, `LinkCard`, `DataCard`, `ShareCard`, `PageHeader`, `PageTitle`, `PageContent`                                  |
+| 控件 | `Button`, `Segmented`, `Slider`, `Switch`                                                                                           |
+| 图表 | `Chart`, `Donut`                                                                                                                    |
+| 展示 | `Badge`, `IconBlock`, `Tooltip`, `Skeleton`, `DataState`, `TrafficLights`, `WindowBar`, `WindowPanel`, `MDTitle`, `Quote`, `GitHub` |
+| 导航 | `Paginator`                                                                                                                         |
+
+数量不含 `LaikitProvider`、路由辅助组件、hooks 及 `Tooltip.Label` / `Tooltip.Value`。共享工具包括 `useImageStatus`、`useMeasuredHeight`、`formatNumber`、`formatCompact` 和 `formatBytes`。
+
+[接入指南](docs/integration.md) 说明路由适配、服务端渲染、主题定制和组件约定。[交互示例](demo/main.tsx) 在不依赖 Docusaurus 的环境中展示全部组件。
+
+## 开发
 
 ```bash
-python3 scripts/check_repository.py --root .
-python3 -m unittest discover -s tests -v
-npm run format:check
+git clone https://github.com/lailai0916/laikit-ui.git
+cd laikit-ui
+npm ci
+npm run dev
+npm run check
 ```
 
-跨仓库使用方法、验收范围和初始化文件清理边界均由 [SETUP.md](SETUP.md) 维护。
+`npm run check` 验证格式、lint、类型、发布产物、服务端渲染测试和示例构建。`npm run build` 将包输出到 `dist/`；`npm run build:demo` 将示例输出到 `demo-dist/`。另见[发布说明](docs/releasing.md)和[贡献指南](.github/CONTRIBUTING.md)。
 
 ## 许可协议
 
-本项目代码采用 [MIT 许可协议](LICENSE)。
+本项目代码采用 [MIT 许可协议](https://github.com/lailai0916/tools/blob/main/LICENSE)。

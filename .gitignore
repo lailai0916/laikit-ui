@@ -33,3 +33,8 @@ Thumbs.db
 
 # Claude Code — personal, per-machine overrides (shared config lives in settings.json)
 .claude/settings.local.json
+
+demo-dist/
+*.tgz
+
+.repository-standards/

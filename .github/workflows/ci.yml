@@ -2,8 +2,8 @@ name: CI
 
 on:
   push:
-    branches:
-      - main
+    branches: [main]
+    tags: ['v*']
   pull_request:
 
 permissions:
@@ -14,17 +14,18 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v7
-      - uses: actions/setup-python@v7
-        with:
-          python-version: '3.13'
-
-      - name: Validate repository initialization
-        run: python3 scripts/check_repository.py --root .
-      - name: Test repository standards
-        run: python3 -m unittest discover -s tests -v
       - uses: actions/setup-node@v4
         with:
-          node-version: '22'
+          node-version: '24'
           cache: npm
-      - run: npm ci --ignore-scripts
-      - run: npm run format:check
+      - run: npm ci
+      - run: npm run check
+      - run: npm pack --dry-run
+      - uses: actions/checkout@v7
+        with:
+          repository: lailai0916/lailai-template
+          ref: 44bf94b5718ba605cdd7e240ed2e47b4b53f7500
+          path: .repository-standards
+          persist-credentials: false
+      - name: Validate repository standards
+        run: python3 scripts/validate-standards.py .repository-standards/scripts/check_repository.py

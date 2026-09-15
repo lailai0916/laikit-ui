@@ -1,74 +1,100 @@
 <div align="center">
-  <h1>lailai-template</h1>
+  <h1>laikit UI</h1>
   <p><strong>English</strong> · <a href="README.zh-Hans.md">简体中文</a></p>
   <p>
-    <img src="https://img.shields.io/github/actions/workflow/status/lailai0916/lailai-template/ci.yml?branch=main&style=flat-square" />
-    <img src="https://img.shields.io/github/last-commit/lailai0916/lailai-template?style=flat-square" />
-    <img src="https://img.shields.io/github/languages/top/lailai0916/lailai-template?style=flat-square" />
-    <img src="https://img.shields.io/github/repo-size/lailai0916/lailai-template?style=flat-square" />
+    <img src="https://img.shields.io/github/actions/workflow/status/lailai0916/laikit-ui/ci.yml?branch=main&style=flat-square" />
+    <img src="https://img.shields.io/npm/v/@lailai0916/ui?style=flat-square" />
+    <img src="https://img.shields.io/github/last-commit/lailai0916/laikit-ui?style=flat-square" />
+    <img src="https://img.shields.io/github/languages/top/lailai0916/laikit-ui?style=flat-square" />
+    <img src="https://img.shields.io/github/repo-size/lailai0916/laikit-ui?style=flat-square" />
     <img src="https://img.shields.io/badge/code_style-prettier-ff69b4?style=flat-square" />
-    <img src="https://img.shields.io/github/license/lailai0916/lailai-template?style=flat-square" />
+    <img src="https://img.shields.io/github/license/lailai0916/laikit-ui?style=flat-square" />
   </p>
 </div>
 
 ## Project Introduction
 
-A ready-to-use GitHub template that keeps repository standards, setup guidance, bilingual README
-examples, and validation tools together.
+laikit UI is the shared React component library extracted from [lailai's Home](https://lailai.one), published as `@lailai0916/ui`.
 
 ## Project Features
 
-📄 **Shared Standards** — [SETUP.md](SETUP.md) owns repository naming, READMEs, GitHub About,
-engineering defaults, and acceptance requirements.
+🧩 **Shared Components** — 26 components cover cards, controls, charts, navigation, and window panels, with TypeScript declarations and per-component imports.
 
-🗺️ **Ongoing Maintenance** — Generated projects retain a short upstream reference after removing
-their accepted initialization guide.
+🎨 **One Theme** — Shared CSS variables, light and dark palettes, and reduced-motion support keep multiple websites consistent.
 
-🧪 **Central Validation** — The Python checker validates external projects; standards and check
-implementations are maintained only in the template.
+🔌 **Framework Adapters** — Native links and headings work without Docusaurus; `LaikitProvider` connects a host router, heading renderer, and translations when needed.
 
-📮 **Working Defaults** — Bilingual documentation, collaboration forms, Git configuration,
-Prettier, and an Agent project map are ready to adapt.
+🌐 **English and Chinese** — Built-in English and Simplified-Chinese messages cover library-owned labels; applications supply their own content.
 
 ## Getting Started
 
-Click **Use this template**, read the complete [setup guide](SETUP.md), and adapt and verify the
-generated project:
+Use React 18.3.1 or React 19. Development requires Node.js 20.19+; CI uses Node.js 24.
 
 ```bash
-npm ci --ignore-scripts
-npm run format:check
-python3 scripts/check_repository.py --root . --initializing
-python3 scripts/check_repository.py --root . --initializing --github
+npm install @lailai0916/ui react react-dom
 ```
 
-`--github` uses GitHub CLI to verify remote metadata without modifying it. Functionality,
-translation quality, and deployment require their corresponding checks.
+```tsx
+import { Button, LaikitProvider, TitleCard } from '@lailai0916/ui';
+import '@lailai0916/ui/theme.css';
+import '@lailai0916/ui/styles.css';
 
-After acceptance, remove the generated project's inherited `SETUP.md`, retain the upstream link,
-and run ongoing validation from a fixed template revision. The source template permanently keeps
-the guide and tests. Existing projects consult the same guide without copying its contents.
+export function App() {
+  return (
+    <LaikitProvider locale="en">
+      <TitleCard title="Welcome">
+        <Button onClick={() => alert('Hello!')}>Say Hello</Button>
+      </TitleCard>
+    </LaikitProvider>
+  );
+}
+```
+
+Import the two CSS files once at the application entry, in the order shown. The package does not install a global CSS reset or override the host's body font. Set your base typography and `box-sizing` in the application; the theme exposes `--lk-font-family`, `--lk-font-size`, and `--lk-line-height` defaults.
+
+Set `data-theme="light"` or `data-theme="dark"` on `<html>` to select a theme. Without an explicit theme, the palette follows the system preference. Override `--lk-*` tokens after importing the package to customize colors.
+
+For a direct component import, use `import Button from '@lailai0916/ui/Button'`. `Page` and `Markdown` subpaths have named exports. All components are also available as named exports from the package root.
 
 ## Project Structure
 
 ```bash
-lailai-template/
-├── scripts/                        # Shared repository validation
-├── tests/                          # Migration and initialization regression tests
-├── package.json                    # Formatter commands and dependencies
-└── SETUP.md                        # Repository standards and initialization guide
+laikit-ui/
+├── demo/                           # Standalone React examples
+├── docs/                           # Integration and release guides
+├── scripts/                        # Build helpers
+├── src/                            # Components, theme, and adapters
+├── tests/                          # Package and SSR tests
+├── package.json                    # Dependencies, exports, and commands
+└── vite.config.ts                  # ESM and CSS build
 ```
 
-## Validation
+## Components
+
+| Category   | Exports                                                                                                                             |
+| ---------- | ----------------------------------------------------------------------------------------------------------------------------------- |
+| Layout     | `Card`, `TitleCard`, `LinkCard`, `DataCard`, `ShareCard`, `PageHeader`, `PageTitle`, `PageContent`                                  |
+| Controls   | `Button`, `Segmented`, `Slider`, `Switch`                                                                                           |
+| Charts     | `Chart`, `Donut`                                                                                                                    |
+| Display    | `Badge`, `IconBlock`, `Tooltip`, `Skeleton`, `DataState`, `TrafficLights`, `WindowBar`, `WindowPanel`, `MDTitle`, `Quote`, `GitHub` |
+| Navigation | `Paginator`                                                                                                                         |
+
+The count excludes `LaikitProvider`, routing helpers, hooks, and `Tooltip.Label` / `Tooltip.Value`. Shared utilities include `useImageStatus`, `useMeasuredHeight`, `formatCompact`, and `formatBytes`.
+
+See the [integration guide](docs/integration.md) for router adapters, server rendering, theme customization, and component contracts. The [interactive examples](demo/main.tsx) exercise every component without Docusaurus.
+
+## Development
 
 ```bash
-python3 scripts/check_repository.py --root .
-python3 -m unittest discover -s tests -v
-npm run format:check
+git clone https://github.com/lailai0916/laikit-ui.git
+cd laikit-ui
+npm ci
+npm run dev
+npm run check
 ```
 
-[SETUP.md](SETUP.md) owns cross-repository usage, acceptance coverage, and initialization cleanup.
+`npm run check` verifies formatting, lint, types, the distributable, server rendering tests, and the demo build. `npm run build` writes the package to `dist/`; `npm run build:demo` writes the examples to `demo-dist/`. See [release instructions](docs/releasing.md) and [contribution guidelines](.github/CONTRIBUTING.md).
 
 ## License
 
-This project's code is licensed under [MIT License](LICENSE).
+This project's code is licensed under [MIT License](https://github.com/lailai0916/tools/blob/main/LICENSE).

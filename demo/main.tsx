@@ -63,6 +63,10 @@ const copy = chinese
       navigation: '组件导航',
       source: '查看源代码',
       clicks: '点击次数',
+      language: '语言',
+      view: '视图',
+      active: '已选中',
+      other: '其他',
     }
   : {
       description: 'React components and design tokens for consistent websites.',
@@ -91,6 +95,10 @@ const copy = chinese
       navigation: 'Component navigation',
       source: 'View Source',
       clicks: 'Clicks',
+      language: 'Language',
+      view: 'View',
+      active: 'Active',
+      other: 'Other',
     };
 
 function App() {
@@ -98,7 +106,10 @@ function App() {
   const [enabled, setEnabled] = useState(true);
   const [value, setValue] = useState(40);
   const [clicks, setClicks] = useState(0);
-  const data = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'].map((month, index) => ({
+  const months = chinese
+    ? ['1 月', '2 月', '3 月', '4 月', '5 月', '6 月']
+    : ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'];
+  const data = months.map((month, index) => ({
     key: month,
     value: [12, 28, 18, 42, 35, 56][index],
     tooltipLabel: month,
@@ -107,7 +118,7 @@ function App() {
   return (
     <LaikitProvider locale={locale}>
       <div className="demo">
-        <nav className="navigation" aria-label="Language">
+        <nav className="navigation" aria-label={copy.language}>
           <a href="?lang=en" aria-current={!chinese ? 'page' : undefined}>
             English
           </a>
@@ -140,13 +151,13 @@ function App() {
                   orientation="horizontal"
                   value={selected}
                   onChange={setSelected}
-                  ariaLabel="View"
+                  ariaLabel={copy.view}
                   items={[
                     { value: 'overview', label: copy.tabOne },
                     { value: 'details', label: copy.tabTwo },
                   ]}
                 />
-                <output>{selected}</output>
+                <output>{selected === 'overview' ? copy.tabOne : copy.tabTwo}</output>
               </TitleCard>
               <TitleCard title="Slider / Switch">
                 <Slider
@@ -178,7 +189,7 @@ function App() {
                 <div className="row">
                   <IconBlock icon="lucide:check" />
                   <Badge>Badge</Badge>
-                  <Badge active>Active</Badge>
+                  <Badge active>{copy.active}</Badge>
                 </div>
                 <p>{copy.note}</p>
               </Card>
@@ -211,7 +222,7 @@ function App() {
                   { x: 'React', y: 60 },
                   { x: 'CSS', y: 30 },
                   { x: 'HTML', y: 8 },
-                  { x: 'Other', y: 2 },
+                  { x: copy.other, y: 2 },
                 ]}
                 maxSlices={3}
                 emptyText={copy.empty}

@@ -1,0 +1,27 @@
+.progress {
+  display: grid;
+  gap: var(--lk-space-2);
+}
+
+.progressMeta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--lk-space-3);
+  color: var(--lk-font-color-secondary);
+  font-size: 13px;
+}
+
+.progressTrack {
+  overflow: hidden;
+  height: 8px;
+  border-radius: 4px;
+  background: var(--lk-color-emphasis-100);
+}
+
+.progressValue {
+  height: 100%;
+  border-radius: inherit;
+  background: var(--lk-color-primary);
+  transition: width var(--lk-transition-surface);
+}

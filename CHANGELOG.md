@@ -1,5 +1,15 @@
 # Changelog
 
+## 0.2.0
+
+- Unify the 16 additional visual components from the former `@lailai/ui` package, bringing the library to 42 components.
+- Consolidate the source repository under `lailai0916/ui`, retaining the npm name `@lailai0916/ui`.
+- Move fields, panels, layout, identity, progress, and theme controls to CSS Modules and `--lk-*` tokens.
+- Add a standalone, SSR-safe `ThemeProvider` with persistent system/light/dark preferences and cross-tab synchronization.
+- Extend the shared Button with `danger` and `lg`, and reuse it in IconButton. Existing defaults remain unchanged.
+- Preserve field accessibility metadata, clamp invalid progress values, and support keyboard navigation in compact theme menus.
+- Add migration documentation, stable customization hooks, bilingual examples, and regression checks.
+
 ## 0.1.1
 
 - Preserve selected Segmented and WindowPanel backgrounds on hover in system dark mode.

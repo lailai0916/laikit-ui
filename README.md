@@ -2,13 +2,13 @@
   <h1>laikit UI</h1>
   <p><strong>English</strong> · <a href="README.zh-Hans.md">简体中文</a></p>
   <p>
-    <img src="https://img.shields.io/github/actions/workflow/status/lailai0916/laikit-ui/ci.yml?branch=main&style=flat-square" />
+    <img src="https://img.shields.io/github/actions/workflow/status/lailai0916/ui/ci.yml?branch=main&style=flat-square" />
     <img src="https://img.shields.io/npm/v/@lailai0916/ui?style=flat-square" />
-    <img src="https://img.shields.io/github/last-commit/lailai0916/laikit-ui?style=flat-square" />
-    <img src="https://img.shields.io/github/languages/top/lailai0916/laikit-ui?style=flat-square" />
-    <img src="https://img.shields.io/github/repo-size/lailai0916/laikit-ui?style=flat-square" />
+    <img src="https://img.shields.io/github/last-commit/lailai0916/ui?style=flat-square" />
+    <img src="https://img.shields.io/github/languages/top/lailai0916/ui?style=flat-square" />
+    <img src="https://img.shields.io/github/repo-size/lailai0916/ui?style=flat-square" />
     <img src="https://img.shields.io/badge/code_style-prettier-ff69b4?style=flat-square" />
-    <img src="https://img.shields.io/github/license/lailai0916/laikit-ui?style=flat-square" />
+    <img src="https://img.shields.io/github/license/lailai0916/ui?style=flat-square" />
   </p>
 </div>
 
@@ -16,9 +16,11 @@
 
 laikit UI is the shared React component library extracted from [lailai's Home](https://lailai.one), published as `@lailai0916/ui`.
 
+The former GitHub package `@lailai/ui` has been merged into this library; the repository was renamed from `laikit-ui` to `ui`. Home, Tools, and Academy share this npm package; see the [migration guide](docs/migrating-from-ui.md) for older applications.
+
 ## Project Features
 
-🧩 **Shared Components** — 26 components cover cards, controls, charts, navigation, and window panels, with TypeScript declarations and per-component imports.
+🧩 **Shared Components** — 42 components cover cards, forms, controls, charts, navigation, and window panels, with TypeScript declarations and per-component imports.
 
 🎨 **One Theme** — Shared CSS variables, light and dark palettes, and reduced-motion support keep multiple websites consistent.
 
@@ -52,14 +54,14 @@ export function App() {
 
 Import the two CSS files once at the application entry, in the order shown. The package does not install a global CSS reset or override the host's body font. Set your base typography and `box-sizing` in the application; the theme exposes `--lk-font-family`, `--lk-font-size`, and `--lk-line-height` defaults.
 
-Set `data-theme="light"` or `data-theme="dark"` on `<html>` to select a theme. Without an explicit theme, the palette follows the system preference. Override `--lk-*` tokens after importing the package to customize colors.
+Set `data-theme="light"` or `data-theme="dark"` on `<html>` to select a theme. Without an explicit theme, the palette follows the system preference. Override `--lk-*` tokens after importing the package to customize colors. Standalone React apps can use `ThemeProvider` and `ThemeControl` to persist preferences; hosts such as Docusaurus keep their existing theme manager.
 
-For a direct component import, use `import Button from '@lailai0916/ui/Button'`. `Page` and `Markdown` subpaths have named exports. All components are also available as named exports from the package root.
+For a direct component import, use `import Button from '@lailai0916/ui/Button'`. `Page`, `Markdown`, `Field`, `Layout`, and `Panel` subpaths have named exports. All components are also available as named exports from the package root.
 
 ## Project Structure
 
 ```bash
-laikit-ui/
+ui/
 ├── demo/                           # Standalone React examples
 ├── docs/                           # Integration and release guides
 ├── scripts/                        # Build and release helpers
@@ -71,23 +73,24 @@ laikit-ui/
 
 ## Components
 
-| Category   | Exports                                                                                                                             |
-| ---------- | ----------------------------------------------------------------------------------------------------------------------------------- |
-| Layout     | `Card`, `TitleCard`, `LinkCard`, `DataCard`, `ShareCard`, `PageHeader`, `PageTitle`, `PageContent`                                  |
-| Controls   | `Button`, `Segmented`, `Slider`, `Switch`                                                                                           |
-| Charts     | `Chart`, `Donut`                                                                                                                    |
-| Display    | `Badge`, `IconBlock`, `Tooltip`, `Skeleton`, `DataState`, `TrafficLights`, `WindowBar`, `WindowPanel`, `MDTitle`, `Quote`, `GitHub` |
-| Navigation | `Paginator`                                                                                                                         |
+| Category   | Exports                                                                                                                                                                                     |
+| ---------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Layout     | `Card`, `TitleCard`, `LinkCard`, `DataCard`, `ShareCard`, `PageHeader`, `PageTitle`, `PageContent`, `PageContainer`, `Stack`, `Cluster`, `Panel`, `PanelHeader`, `PanelBody`, `PanelFooter` |
+| Controls   | `Button`, `IconButton`, `Segmented`, `Slider`, `Switch`, `ThemeControl`                                                                                                                     |
+| Charts     | `Chart`, `Donut`, `Progress`                                                                                                                                                                |
+| Display    | `Badge`, `IconBlock`, `Tooltip`, `Skeleton`, `DataState`, `TrafficLights`, `WindowBar`, `WindowPanel`, `MDTitle`, `Quote`, `GitHub`, `Avatar`, `Brand`, `EmptyState`                        |
+| Forms      | `TextField`, `TextAreaField`, `SelectField`                                                                                                                                                 |
+| Navigation | `Paginator`                                                                                                                                                                                 |
 
-The count excludes `LaikitProvider`, routing helpers, hooks, and `Tooltip.Label` / `Tooltip.Value`. Shared utilities include `useImageStatus`, `useMeasuredHeight`, `formatCompact`, and `formatBytes`.
+The count excludes `LaikitProvider`, `ThemeProvider`, routing helpers, hooks, and `Tooltip.Label` / `Tooltip.Value`. Shared utilities include `useImageStatus`, `useMeasuredHeight`, `formatNumber`, `formatCompact`, and `formatBytes`.
 
 See the [integration guide](docs/integration.md) for router adapters, server rendering, theme customization, and component contracts. The [interactive examples](demo/main.tsx) exercise every component without Docusaurus.
 
 ## Development
 
 ```bash
-git clone https://github.com/lailai0916/laikit-ui.git
-cd laikit-ui
+git clone https://github.com/lailai0916/ui.git
+cd ui
 npm ci
 npm run dev
 npm run check

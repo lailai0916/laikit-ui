@@ -1,0 +1,27 @@
+.panel {
+  border: 1px solid var(--lk-color-emphasis-300);
+  border-radius: var(--lk-radius-md);
+  background: var(--lk-card-background-color);
+}
+
+.panelFeature {
+  border-radius: var(--lk-radius-lg);
+}
+
+.panelMuted {
+  background: var(--lk-color-emphasis-100);
+}
+
+.panelHeader,
+.panelBody,
+.panelFooter {
+  padding: var(--lk-space-5);
+}
+
+.panelHeader {
+  border-bottom: 1px solid var(--lk-color-emphasis-300);
+}
+
+.panelFooter {
+  border-top: 1px solid var(--lk-color-emphasis-300);
+}

@@ -1,0 +1,23 @@
+.pageContainer {
+  width: min(100% - 32px, var(--lk-container-width, 1120px));
+  margin-inline: auto;
+}
+
+.stack {
+  display: flex;
+  flex-direction: column;
+  gap: var(--lk-stack-gap, var(--lk-space-4));
+}
+
+.cluster {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--lk-cluster-gap, var(--lk-space-3));
+}
+
+@media (max-width: 600px), (pointer: coarse) {
+  .pageContainer {
+    width: min(100% - 24px, var(--lk-container-width, 1120px));
+  }
+}

@@ -1,0 +1,131 @@
+.fieldControl:focus-visible {
+  outline: 2px solid var(--lk-color-primary);
+  outline-offset: 2px;
+}
+
+.field {
+  display: grid;
+  gap: 6px;
+}
+
+.fieldLabel {
+  color: var(--lk-font-color-base);
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.fieldControl {
+  width: 100%;
+  min-height: var(--lk-control-height);
+  padding: 9px 12px;
+  border: 1px solid var(--lk-color-emphasis-300);
+  border-radius: var(--lk-radius-control);
+  background: var(--lk-card-background-color);
+  color: var(--lk-font-color-base);
+  font: inherit;
+  font-size: 15px;
+  transition:
+    border-color var(--lk-transition),
+    background-color var(--lk-transition),
+    box-shadow var(--lk-transition);
+}
+
+.fieldControl::placeholder {
+  color: var(--lk-font-color-tertiary);
+  opacity: 1;
+}
+
+.fieldControl:-webkit-autofill {
+  box-shadow: 0 0 0 1000px var(--lk-card-background-color) inset;
+  -webkit-text-fill-color: var(--lk-font-color-base);
+  caret-color: var(--lk-color-primary);
+}
+
+input[type='number'].fieldControl {
+  appearance: textfield;
+}
+
+input[type='number'].fieldControl::-webkit-inner-spin-button,
+input[type='number'].fieldControl::-webkit-outer-spin-button {
+  margin: 0;
+  appearance: none;
+}
+
+.fieldControl:disabled {
+  cursor: not-allowed;
+  opacity: 0.48;
+}
+
+.fieldControl:read-only:not(select) {
+  background: var(--lk-color-emphasis-100);
+}
+
+.fieldControl[aria-invalid='true'] {
+  border-color: var(--lk-color-danger);
+}
+
+.fieldSelect {
+  position: relative;
+  display: block;
+}
+
+.fieldSelect select {
+  padding-right: 38px;
+  appearance: none;
+  cursor: default;
+}
+
+.fieldSelect svg {
+  position: absolute;
+  top: 50%;
+  right: 12px;
+  width: var(--lk-icon-size-small);
+  height: var(--lk-icon-size-small);
+  fill: none;
+  stroke: var(--lk-font-color-secondary);
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 1.75;
+  transform: translateY(-50%);
+  pointer-events: none;
+}
+
+.fieldSelect:has(select:disabled) svg {
+  opacity: 0.48;
+}
+
+textarea.fieldControl {
+  min-height: 112px;
+  resize: vertical;
+}
+
+.fieldControl:hover:not(:disabled) {
+  border-color: var(--lk-color-emphasis-400);
+}
+
+.fieldControl:focus-visible {
+  outline: 0;
+  border-color: var(--lk-color-primary);
+  box-shadow: var(--lk-focus-ring);
+}
+
+.fieldDescription,
+.fieldError {
+  margin: 0;
+  font-size: 13px;
+  line-height: 1.45;
+}
+
+.fieldDescription {
+  color: var(--lk-font-color-secondary);
+}
+
+.fieldError {
+  color: var(--lk-color-danger);
+}
+
+@media (max-width: 600px), (pointer: coarse) {
+  .fieldControl {
+    min-height: 44px;
+  }
+}

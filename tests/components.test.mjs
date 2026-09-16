@@ -5,6 +5,17 @@ import { createElement as h } from 'react';
 import { renderToStaticMarkup } from 'react-dom/server';
 import {
   Button,
+  IconButton,
+  TextField,
+  TextAreaField,
+  SelectField,
+  PageContainer,
+  Stack,
+  Cluster,
+  Panel,
+  Progress,
+  ThemeProvider,
+  ThemeControl,
   Card,
   Chart,
   DataCard,
@@ -138,7 +149,7 @@ test('donut folds the long tail and uses the localized other label', () => {
 });
 
 test('server rendering browser-dependent components is safe', () => {
-  assert.doesNotThrow(() => render(h(GitHub, { repo: 'lailai0916/laikit-ui' })));
+  assert.doesNotThrow(() => render(h(GitHub, { repo: 'lailai0916/ui' })));
   assert.match(
     render(h(Tooltip, null, h(Tooltip.Label, null, 'Label'), h(Tooltip.Value, null, '42'))),
     /Label.*42/s
@@ -175,4 +186,96 @@ test('published files are framework-neutral and retain client boundaries', async
   await readFile('dist/theme.css');
   await readFile('dist/styles.css');
   await readFile('dist/index.d.ts');
+});
+
+test('migrated buttons share variants, sizes, and explicit toggle semantics', () => {
+  assert.doesNotMatch(render(h(Button, null, 'Save')), /aria-pressed/);
+  assert.match(render(h(Button, { active: false }, 'Toggle')), /aria-pressed="false"/);
+  const danger = render(h(Button, { variant: 'danger', size: 'lg' }, 'Delete'));
+  assert.match(danger, /variant_danger/);
+  assert.match(danger, /size_lg/);
+  assert.match(render(h(IconButton, { label: 'Close', size: 'sm' }, '×')), /aria-label="Close"/);
+});
+
+test('fields preserve host accessibility metadata alongside descriptions and errors', () => {
+  for (const Field of [TextField, TextAreaField, SelectField]) {
+    const html = render(
+      h(Field, {
+        id: 'name',
+        label: 'Name',
+        description: 'Help',
+        error: 'Required',
+        'aria-describedby': 'external',
+      })
+    );
+    assert.match(html, /for="name"/);
+    assert.match(html, /aria-describedby="external name-description name-error"/);
+    assert.match(html, /aria-invalid="true"/);
+    assert.match(html, /id="name-error"[^>]*role="alert"/);
+    assert.match(
+      render(h(Field, { label: 'Name', 'aria-invalid': 'spelling' })),
+      /aria-invalid="spelling"/
+    );
+  }
+});
+
+test('layout dimensions include zero and panels retain customization hooks', () => {
+  assert.match(render(h(PageContainer, { width: 720 }, 'Content')), /--lk-container-width:720px/);
+  assert.match(render(h(Stack, { gap: 0 }, 'Content')), /--lk-stack-gap:0px/);
+  assert.match(render(h(Cluster, { gap: 8 }, 'Content')), /--lk-cluster-gap:8px/);
+  assert.match(render(h(Panel, { feature: true, tone: 'muted' }, 'Content')), /data-lk="panel"/);
+});
+
+test('progress clamps invalid and out-of-range data', () => {
+  for (const [value, max, expected, percent] of [
+    [25, 50, 25, 50],
+    [150, 100, 100, 100],
+    [-10, 100, 0, 0],
+    [NaN, 100, 0, 0],
+    [10, 0, 0, 0],
+    [10, Infinity, 0, 0],
+  ]) {
+    const html = render(h(Progress, { label: 'Progress', value, max }));
+    assert.match(html, new RegExp(`aria-valuenow="${expected}"`));
+    assert.match(html, new RegExp(`width:${percent}%`));
+    assert.doesNotMatch(html, /NaN|Infinity/);
+  }
+});
+
+test('standalone theme controls render without browser globals', () => {
+  const labels = { system: 'System', light: 'Light', dark: 'Dark' };
+  const html = render(h(ThemeProvider, null, h(ThemeControl, { labels })));
+  assert.match(html, /aria-pressed="true">System/);
+  assert.match(
+    render(h(ThemeProvider, null, h(ThemeControl, { labels, variant: 'compact' }))),
+    /aria-haspopup="menu"/
+  );
+});
+
+test('new public component subpaths are available and old global styling is absent', async () => {
+  for (const name of [
+    'Avatar',
+    'Brand',
+    'EmptyState',
+    'Field',
+    'IconButton',
+    'Layout',
+    'Panel',
+    'Progress',
+    'ThemeControl',
+    'ThemeProvider',
+  ]) {
+    assert.ok(Object.keys(await import(`../dist/components/${name}/index.js`)).length);
+    await readFile(`dist/components/${name}/index.d.ts`);
+  }
+  const css = await readFile('dist/styles.css', 'utf8');
+  assert.doesNotMatch(css, /--lui-|\.lui-/);
+  const theme = await readFile('dist/theme.css', 'utf8');
+  const definitions = new Set(
+    [...`${css}\n${theme}`.matchAll(/(--lk-[\w-]+)\s*:/g)].map((match) => match[1])
+  );
+  const withFallback = new Set(['--lk-container-width', '--lk-stack-gap', '--lk-cluster-gap']);
+  for (const [, token] of css.matchAll(/var\((--lk-[\w-]+)/g)) {
+    assert.ok(definitions.has(token) || withFallback.has(token), `Undefined token: ${token}`);
+  }
 });

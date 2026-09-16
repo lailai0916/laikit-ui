@@ -1,0 +1,152 @@
+.themeControlButton,
+.themePickerTrigger,
+.themePickerOption {
+  appearance: none;
+  border: 0;
+  font: inherit;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.themeControlButton:focus-visible {
+  outline: 2px solid var(--lk-color-primary);
+  outline-offset: 2px;
+}
+
+.themePicker {
+  position: relative;
+  display: inline-flex;
+}
+
+.themePickerTrigger {
+  display: grid;
+  width: 34px;
+  height: 34px;
+  padding: 0;
+  place-items: center;
+  border: 1px solid transparent;
+  border-radius: 7px;
+  background: transparent;
+  color: var(--lk-font-color-secondary);
+  transition:
+    background-color var(--lk-transition),
+    border-color var(--lk-transition),
+    color var(--lk-transition),
+    transform var(--lk-transition);
+}
+
+.themePickerTrigger:hover,
+.themePickerTrigger[aria-expanded='true'] {
+  border-color: var(--lk-color-emphasis-300);
+  background: var(--lk-color-emphasis-100);
+  color: var(--lk-font-color-base);
+}
+
+.themePickerTrigger:active {
+  transform: scale(0.94);
+}
+
+.themePickerTrigger:focus-visible,
+.themePickerOption:focus-visible {
+  outline: 2px solid var(--lk-color-primary);
+  outline-offset: 2px;
+}
+
+.themePicker svg {
+  width: 17px;
+  height: 17px;
+  fill: none;
+  stroke: currentColor;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 1.75;
+}
+
+.themePickerMenu {
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  z-index: 100;
+  display: grid;
+  width: 148px;
+  gap: 2px;
+  padding: 5px;
+  border: 1px solid var(--lk-color-emphasis-300);
+  border-radius: 10px;
+  background: var(--lk-card-background-color);
+  box-shadow: var(--lk-shadow-overlay);
+  transform-origin: top right;
+  animation: themeMenuEnter var(--lk-transition) both;
+}
+
+.themePickerOption {
+  display: grid;
+  min-height: 36px;
+  grid-template-columns: 20px minmax(0, 1fr) 8px;
+  align-items: center;
+  gap: 8px;
+  padding: 0 9px;
+  border-radius: 7px;
+  background: transparent;
+  color: var(--lk-font-color-base);
+  text-align: left;
+  font-size: 13px;
+  font-weight: 550;
+}
+
+.themePickerOption:hover,
+.themePickerOption[aria-checked='true'] {
+  background: var(--lk-color-emphasis-100);
+}
+
+.themePickerCheck {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: transparent;
+}
+
+.themePickerOption[aria-checked='true'] .themePickerCheck {
+  background: var(--lk-color-primary);
+}
+
+@keyframes themeMenuEnter {
+  from {
+    opacity: 0;
+    transform: scale(0.97) translateY(-2px);
+  }
+}
+
+.themeControl {
+  display: inline-grid;
+  grid-template-columns: repeat(3, minmax(36px, 1fr));
+  gap: 2px;
+  padding: 2px;
+  border: 1px solid var(--lk-color-emphasis-300);
+  border-radius: 10px;
+  background: var(--lk-color-emphasis-100);
+}
+
+.themeControlButton {
+  min-height: 34px;
+  padding: 0 10px;
+  border-radius: 7px;
+  background: transparent;
+  color: var(--lk-font-color-secondary);
+  font-size: 13px;
+  font-weight: 600;
+  transition:
+    background-color var(--lk-transition),
+    color var(--lk-transition);
+}
+
+.themeControlButton[aria-pressed='true'] {
+  background: var(--lk-card-background-color);
+  color: var(--lk-font-color-base);
+}
+
+@media (max-width: 600px), (pointer: coarse) {
+  .themePickerTrigger {
+    width: 44px;
+    height: 44px;
+  }
+}

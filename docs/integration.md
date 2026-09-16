@@ -11,6 +11,8 @@ browser download size.
 
 Root exports are named. Most component subpaths export a default component; `Page` exports
 `PageHeader`, `PageTitle`, and `PageContent`, and `Markdown` exports `MDTitle`.
+`Field` exports `TextField`, `TextAreaField`, and `SelectField`; `Layout` exports `PageContainer`,
+`Stack`, and `Cluster`; `Panel` exports `Panel`, `PanelHeader`, `PanelBody`, and `PanelFooter`.
 `Tooltip.Label` and `Tooltip.Value` are compound children. Prop declarations ship in `dist/`;
 the complete working examples are in `demo/main.tsx`.
 
@@ -115,3 +117,34 @@ framework's supported application entry. A provider itself has no browser-only D
 Use identical locale and initial values for server rendering and hydration. Browser-dependent
 content such as image status, measurements, and GitHub data updates after mount. Hosts should load
 saved preferences before paint using their own established mechanism.
+
+## Standalone theme management
+
+Wrap a standalone app in `ThemeProvider` and pass translated `system`, `light`, and `dark` labels to
+`ThemeControl`. `useTheme()` exposes `preference`, `resolvedTheme`, and `setPreference`. The default
+storage key is `lailai.theme`; `storageKey` can isolate another application. `themeColors` optionally
+sets the existing browser theme-color meta tag for light/dark modes. No meta tag is inserted.
+
+The provider reads saved preferences after mount, listens for system and cross-tab changes, and
+keeps selection usable when local storage is blocked. A host pre-paint script may set the initial
+root theme to avoid a flash. Use only one document theme owner: Docusaurus hosts keep their existing
+color-mode manager instead of adding this provider. `LaikitProvider` handles routing/localization
+independently and can be used alongside either theme owner.
+
+`ThemeControl` supports segmented buttons or a compact menu. The compact menu focuses the selected
+item, supports arrows, Home/End and Escape, closes on outside focus/click, and restores trigger focus
+after a selection. Tab leaves the menu normally.
+
+## Application primitives
+
+- `Button` defaults to `secondary` / `md`; choose `primary`, `ghost`, or `danger` explicitly. Sizes
+  are `sm`, `md`, and `lg`. `active` adds toggle semantics when supplied; `IconButton` requires `label`.
+- Fields require `label`; optional `description` and `error` are connected to the control. Caller
+  `aria-describedby` IDs are preserved. `SelectField` accepts native option children.
+- `Progress` accepts `value` and optional positive `max`; invalid ranges render zero progress and
+  out-of-range values are clamped. Layout `gap` values and `PageContainer.width` are pixels.
+- Prefer public props and theme variables to styling internal markup. Supported `data-lk` hooks
+  are `button`, `avatar`, `brand`, `brand-logo`, `field-control`, `panel`, and `theme-menu`.
+  Generated CSS Module classes are private. Load host overrides after package CSS.
+
+See [Migrating from ui](migrating-from-ui.md) for the previous GitHub package's API and token mappings.

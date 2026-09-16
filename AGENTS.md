@@ -19,6 +19,8 @@ published files. See `docs/releasing.md` for releases. Run checks before committ
 - `src/components/*/` contains each component's `index.tsx` and CSS Module.
 - `src/provider.tsx` connects native defaults to host routing, headings, and localization.
 - `src/theme.css` owns shared variables, light/dark palettes, and reduced motion.
+- `src/components/ThemeProvider/` owns optional standalone theme state; framework hosts may keep their own manager.
+- Stable `data-lk` customization hooks and the former `ui` migration are documented in `docs/integration.md` and `docs/migrating-from-ui.md`.
 - `src/hooks/` and `src/utils/` contain public, framework-neutral helpers.
 - `demo/` exercises all public components without a framework adapter.
 - `tests/` verifies server rendering, localization, semantics, and package boundaries.
@@ -30,7 +32,7 @@ After validation, `.github/workflows/ci.yml` publishes an unpublished stable ver
 `main` or manual dispatches on `main`, using npm Trusted Publishing. Existing versions are skipped;
 registry failures and unpublished versions older than `latest` fail. Pull requests and tags never
 publish. Bump `package.json` and `package-lock.json` together and update `CHANGELOG.md` for each release.
-The npm connection names `lailai0916/laikit-ui` and `ci.yml`, with direct publishing allowed and no
+The npm connection names `lailai0916/ui` and `ci.yml`, with direct publishing allowed and no
 environment. Keep that binding aligned with workflow changes. Do not add npm tokens to CI.
 
 ## Conventions
@@ -49,6 +51,6 @@ environment. Keep that binding aligned with workflow changes. Do not add npm tok
 CI calls the external repository checker at reviewed revision
 `44bf94b5718ba605cdd7e240ed2e47b4b53f7500`; update that pin deliberately.
 
-The package name intentionally differs from the repository name at the user’s request.
+The public npm package intentionally retains the `@lailai0916` scope.
 `scripts/validate-standards.py` delegates to the external checker, permits only that exact naming
 exception, and separately verifies `@lailai0916/ui`. It does not copy the upstream checker.

@@ -1,6 +1,6 @@
 # Releasing
 
-The public npm package is `@lailai0916/ui`; GitHub source is `lailai0916/laikit-ui`.
+The public npm package is `@lailai0916/ui`; GitHub source is `lailai0916/ui`.
 The `CI` workflow in `.github/workflows/ci.yml` validates pushes and pull requests. A push to `main`
 then publishes an unpublished stable version automatically through npm Trusted Publishing (OIDC).
 The publish job also runs when the maintainer manually dispatches `CI` on `main`.
@@ -14,7 +14,7 @@ An existing version is skipped; failed checks, registry errors, or an unpublishe
 2. Run `npm run check`, then `npm pack --dry-run`. Confirm the package includes only `dist/`, package
    metadata, README, and license. Install the tarball into a consumer and verify its build and UI.
 3. Commit and push the release source to `main`. Wait for both `validate` and `publish` in the
-   [CI workflow](https://github.com/lailai0916/laikit-ui/actions/workflows/ci.yml) to succeed.
+   [CI workflow](https://github.com/lailai0916/ui/actions/workflows/ci.yml) to succeed.
    Publishing uses a fresh dependency install; `prepublishOnly` reruns the complete package checks.
 4. Verify `npm view @lailai0916/ui version`, create the matching `vX.Y.Z` tag and GitHub release,
    and install the registry version in each consumer. Commit consumer lockfiles and run their checks.
@@ -42,7 +42,7 @@ The package's npm Settings → Trusted Publisher connection must match:
 | -------------------- | -------------- |
 | Provider             | GitHub Actions |
 | Organization or user | `lailai0916`   |
-| Repository           | `laikit-ui`    |
+| Repository           | `ui`           |
 | Workflow filename    | `ci.yml`       |
 | Environment name     | Empty          |
 | Allow npm publish    | Enabled        |

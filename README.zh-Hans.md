@@ -2,13 +2,13 @@
   <h1>laikit UI</h1>
   <p><a href="README.md">English</a> · <strong>简体中文</strong></p>
   <p>
-    <img src="https://img.shields.io/github/actions/workflow/status/lailai0916/laikit-ui/ci.yml?branch=main&style=flat-square" />
+    <img src="https://img.shields.io/github/actions/workflow/status/lailai0916/ui/ci.yml?branch=main&style=flat-square" />
     <img src="https://img.shields.io/npm/v/@lailai0916/ui?style=flat-square" />
-    <img src="https://img.shields.io/github/last-commit/lailai0916/laikit-ui?style=flat-square" />
-    <img src="https://img.shields.io/github/languages/top/lailai0916/laikit-ui?style=flat-square" />
-    <img src="https://img.shields.io/github/repo-size/lailai0916/laikit-ui?style=flat-square" />
+    <img src="https://img.shields.io/github/last-commit/lailai0916/ui?style=flat-square" />
+    <img src="https://img.shields.io/github/languages/top/lailai0916/ui?style=flat-square" />
+    <img src="https://img.shields.io/github/repo-size/lailai0916/ui?style=flat-square" />
     <img src="https://img.shields.io/badge/code_style-prettier-ff69b4?style=flat-square" />
-    <img src="https://img.shields.io/github/license/lailai0916/laikit-ui?style=flat-square" />
+    <img src="https://img.shields.io/github/license/lailai0916/ui?style=flat-square" />
   </p>
 </div>
 
@@ -16,9 +16,11 @@
 
 laikit UI 是从 [lailai's Home](https://lailai.one) 抽出的共享 React 组件库，以 `@lailai0916/ui` 发布。
 
+原 GitHub 包 `@lailai/ui` 的组件已合并到此库，仓库由 `laikit-ui` 重命名为 `ui`。Home、Tools 和 Academy 共用这一 npm 包；旧项目请参考[迁移指南](docs/migrating-from-ui.md)。
+
 ## 项目特性
 
-🧩 **共享组件** — 26 个组件覆盖卡片、控件、图表、导航和窗口面板，提供 TypeScript 类型声明与按组件导入入口。
+🧩 **共享组件** — 42 个组件覆盖卡片、表单、控件、图表、导航和窗口面板，提供 TypeScript 类型声明与按组件导入入口。
 
 🎨 **统一主题** — 共用 CSS 变量、深浅配色及减少动画支持，让多个网站保持一致。
 
@@ -52,14 +54,14 @@ export function App() {
 
 在应用入口按上述顺序各导入一次 CSS。组件库不安装全局 CSS reset，也不覆盖宿主的正文字体。请在应用中设置基础排版和 `box-sizing`；主题提供 `--lk-font-family`、`--lk-font-size` 和 `--lk-line-height` 默认值。
 
-在 `<html>` 上设置 `data-theme="light"` 或 `data-theme="dark"` 选择主题；未指定时，配色跟随系统。导入组件库后覆盖 `--lk-*` 变量即可定制颜色。
+在 `<html>` 上设置 `data-theme="light"` 或 `data-theme="dark"` 选择主题；未指定时，配色跟随系统。导入组件库后覆盖 `--lk-*` 变量即可定制颜色。独立 React 应用可使用 `ThemeProvider` 和 `ThemeControl` 保存主题偏好；Docusaurus 等已有主题管理的宿主继续使用自身的管理方式。
 
-按组件导入可写为 `import Button from '@lailai0916/ui/Button'`。`Page` 和 `Markdown` 子路径使用具名导出；所有组件也都支持从包根入口具名导入。
+按组件导入可写为 `import Button from '@lailai0916/ui/Button'`。`Page`、`Markdown`、`Field`、`Layout` 和 `Panel` 子路径使用具名导出；所有组件也都支持从包根入口具名导入。
 
 ## 项目结构
 
 ```bash
-laikit-ui/
+ui/
 ├── demo/                           # 独立 React 示例
 ├── docs/                           # 接入和发布指南
 ├── scripts/                        # 构建和发布辅助脚本
@@ -71,23 +73,24 @@ laikit-ui/
 
 ## 组件清单
 
-| 分类 | 导出                                                                                                                                |
-| ---- | ----------------------------------------------------------------------------------------------------------------------------------- |
-| 布局 | `Card`, `TitleCard`, `LinkCard`, `DataCard`, `ShareCard`, `PageHeader`, `PageTitle`, `PageContent`                                  |
-| 控件 | `Button`, `Segmented`, `Slider`, `Switch`                                                                                           |
-| 图表 | `Chart`, `Donut`                                                                                                                    |
-| 展示 | `Badge`, `IconBlock`, `Tooltip`, `Skeleton`, `DataState`, `TrafficLights`, `WindowBar`, `WindowPanel`, `MDTitle`, `Quote`, `GitHub` |
-| 导航 | `Paginator`                                                                                                                         |
+| 分类 | 导出                                                                                                                                                                                        |
+| ---- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| 布局 | `Card`, `TitleCard`, `LinkCard`, `DataCard`, `ShareCard`, `PageHeader`, `PageTitle`, `PageContent`, `PageContainer`, `Stack`, `Cluster`, `Panel`, `PanelHeader`, `PanelBody`, `PanelFooter` |
+| 控件 | `Button`, `IconButton`, `Segmented`, `Slider`, `Switch`, `ThemeControl`                                                                                                                     |
+| 图表 | `Chart`, `Donut`, `Progress`                                                                                                                                                                |
+| 展示 | `Badge`, `IconBlock`, `Tooltip`, `Skeleton`, `DataState`, `TrafficLights`, `WindowBar`, `WindowPanel`, `MDTitle`, `Quote`, `GitHub`, `Avatar`, `Brand`, `EmptyState`                        |
+| 表单 | `TextField`, `TextAreaField`, `SelectField`                                                                                                                                                 |
+| 导航 | `Paginator`                                                                                                                                                                                 |
 
-数量不含 `LaikitProvider`、路由辅助组件、hooks 及 `Tooltip.Label` / `Tooltip.Value`。共享工具包括 `useImageStatus`、`useMeasuredHeight`、`formatNumber`、`formatCompact` 和 `formatBytes`。
+数量不含 `LaikitProvider`、`ThemeProvider`、路由辅助组件、hooks 及 `Tooltip.Label` / `Tooltip.Value`。共享工具包括 `useImageStatus`、`useMeasuredHeight`、`formatNumber`、`formatCompact` 和 `formatBytes`。
 
 [接入指南](docs/integration.md) 说明路由适配、服务端渲染、主题定制和组件约定。[交互示例](demo/main.tsx) 在不依赖 Docusaurus 的环境中展示全部组件。
 
 ## 开发
 
 ```bash
-git clone https://github.com/lailai0916/laikit-ui.git
-cd laikit-ui
+git clone https://github.com/lailai0916/ui.git
+cd ui
 npm ci
 npm run dev
 npm run check

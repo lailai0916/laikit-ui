@@ -1,6 +1,23 @@
 import { useState } from 'react';
 import { createRoot } from 'react-dom/client';
 import {
+  Avatar,
+  Brand,
+  Cluster,
+  EmptyState,
+  IconButton,
+  PageContainer,
+  Panel,
+  PanelHeader,
+  PanelBody,
+  PanelFooter,
+  Progress,
+  SelectField,
+  Stack,
+  TextField,
+  TextAreaField,
+  ThemeProvider,
+  ThemeControl,
   Badge,
   Button,
   Card,
@@ -67,6 +84,13 @@ const copy = chinese
       view: '视图',
       active: '已选中',
       other: '其他',
+      forms: '表单与应用组件',
+      name: '姓名',
+      descriptionLabel: '描述',
+      system: '跟随系统',
+      light: '浅色',
+      dark: '深色',
+      delete: '删除',
     }
   : {
       description: 'React components and design tokens for consistent websites.',
@@ -99,6 +123,13 @@ const copy = chinese
       view: 'View',
       active: 'Active',
       other: 'Other',
+      forms: 'Forms and Application Components',
+      name: 'Name',
+      descriptionLabel: 'Description',
+      system: 'System',
+      light: 'Light',
+      dark: 'Dark',
+      delete: 'Delete',
     };
 
 function App() {
@@ -125,12 +156,70 @@ function App() {
           <a href="?lang=zh-Hans" aria-current={chinese ? 'page' : undefined}>
             简体中文
           </a>
-          <a href="https://github.com/lailai0916/laikit-ui">{copy.source}</a>
+          <a href="https://github.com/lailai0916/ui">{copy.source}</a>
         </nav>
         <PageHeader aside={<Badge active>@lailai0916/ui</Badge>}>
           <PageTitle title="laikit UI" description={copy.description} />
         </PageHeader>
         <PageContent>
+          <section aria-labelledby="forms">
+            <h2 id="forms">{copy.forms}</h2>
+            <PageContainer width={1100}>
+              <div className="grid">
+                <Panel>
+                  <PanelHeader>
+                    <Cluster>
+                      <Avatar name="lailai" alt="lailai" />
+                      <Brand
+                        logoSrc="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%231d9bf0'/%3E%3Cpath d='M10 8v16h14' stroke='white' stroke-width='3' fill='none'/%3E%3C/svg%3E"
+                        name="laikit UI"
+                      />
+                    </Cluster>
+                  </PanelHeader>
+                  <PanelBody>
+                    <Stack>
+                      <TextField label={copy.name} description={copy.note} />
+                      <TextAreaField label={copy.descriptionLabel} />
+                      <SelectField label={copy.view} defaultValue="overview">
+                        <option value="overview">{copy.tabOne}</option>
+                        <option value="details">{copy.tabTwo}</option>
+                      </SelectField>
+                      <Progress label={copy.value} value={value} />
+                    </Stack>
+                  </PanelBody>
+                  <PanelFooter>
+                    <Cluster>
+                      <Button variant="danger" size="lg">
+                        {copy.delete}
+                      </Button>
+                      <IconButton label={copy.reset} onClick={() => setValue(0)}>
+                        ↺
+                      </IconButton>
+                    </Cluster>
+                  </PanelFooter>
+                </Panel>
+                <Stack>
+                  <Panel tone="muted" feature>
+                    <EmptyState
+                      title={copy.empty}
+                      description={copy.description}
+                      action={<Button>{copy.retry}</Button>}
+                    />
+                  </Panel>
+                  <ThemeControl
+                    labels={{ system: copy.system, light: copy.light, dark: copy.dark }}
+                  />
+                  <Cluster>
+                    <span>{copy.system}</span>
+                    <ThemeControl
+                      variant="compact"
+                      labels={{ system: copy.system, light: copy.light, dark: copy.dark }}
+                    />
+                  </Cluster>
+                </Stack>
+              </div>
+            </PageContainer>
+          </section>
           <section aria-labelledby="controls">
             <h2 id="controls">{copy.controls}</h2>
             <div className="grid">
@@ -182,7 +271,7 @@ function App() {
               <LinkCard
                 title="laikit UI"
                 description={copy.description}
-                href="https://github.com/lailai0916/laikit-ui"
+                href="https://github.com/lailai0916/ui"
                 fallbackIcon="lucide:component"
               />
               <Card>
@@ -194,7 +283,7 @@ function App() {
                 <p>{copy.note}</p>
               </Card>
               <ShareCard
-                url="https://github.com/lailai0916/laikit-ui"
+                url="https://github.com/lailai0916/ui"
                 title="laikit UI"
                 description={copy.description}
               />
@@ -244,7 +333,7 @@ function App() {
                 <MDTitle title="MDTitle" description={copy.note} />
                 <Quote author="lailai">{copy.quote}</Quote>
               </Card>
-              <GitHub repo="lailai0916/laikit-ui" />
+              <GitHub repo="lailai0916/ui" />
               <Card>
                 <div className="tooltipPreview">
                   <Tooltip>
@@ -276,4 +365,8 @@ function App() {
   );
 }
 
-createRoot(document.getElementById('root')!).render(<App />);
+createRoot(document.getElementById('root')!).render(
+  <ThemeProvider>
+    <App />
+  </ThemeProvider>
+);

@@ -82,7 +82,9 @@ ui/
 | Forms      | `TextField`, `TextAreaField`, `SelectField`                                                                                                                                                 |
 | Navigation | `Paginator`                                                                                                                                                                                 |
 
-The count excludes `LaikitProvider`, `ThemeProvider`, routing helpers, hooks, and `Tooltip.Label` / `Tooltip.Value`. Shared utilities include `useImageStatus`, `useMeasuredHeight`, `formatNumber`, `formatCompact`, and `formatBytes`.
+The count excludes `LaikitProvider`, `ThemeProvider`, routing helpers, hooks, and `Tooltip.Label` / `Tooltip.Value`. Shared utilities include `useImageStatus`, `useMeasuredHeight`, `formatCompact`, and `formatBytes`.
+
+The [usage documentation](https://lailai.one/docs/project/ui) includes component previews, API guides, theming, and maintenance.
 
 See the [integration guide](docs/integration.md) for router adapters, server rendering, theme customization, and component contracts. The [interactive examples](demo/main.tsx) exercise every component without Docusaurus.
 

@@ -22,6 +22,7 @@ published files. See `docs/releasing.md` for releases. Run checks before committ
 - `src/components/ThemeProvider/` owns optional standalone theme state; framework hosts may keep their own manager.
 - Stable `data-lk` customization hooks and the former `ui` migration are documented in `docs/integration.md` and `docs/migrating-from-ui.md`.
 - `src/hooks/` and `src/utils/` contain public, framework-neutral helpers.
+- Public usage guides and MDX previews live in Home at `docs/project/ui/`, published in the [UI documentation](https://lailai.one/docs/project/ui). Update the matching guide when changing a public API; library-local `docs/` owns integration and release details.
 - `demo/` exercises all public components without a framework adapter.
 - `tests/` verifies server rendering, localization, semantics, and package boundaries.
 - `scripts/check-release.mjs` checks registry versions before automatic publishing.

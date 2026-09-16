@@ -82,9 +82,11 @@ ui/
 | 表单 | `TextField`, `TextAreaField`, `SelectField`                                                                                                                                                 |
 | 导航 | `Paginator`                                                                                                                                                                                 |
 
-数量不含 `LaikitProvider`、`ThemeProvider`、路由辅助组件、hooks 及 `Tooltip.Label` / `Tooltip.Value`。共享工具包括 `useImageStatus`、`useMeasuredHeight`、`formatNumber`、`formatCompact` 和 `formatBytes`。
+数量不含 `LaikitProvider`、`ThemeProvider`、路由辅助组件、hooks 及 `Tooltip.Label` / `Tooltip.Value`。共享工具包括 `useImageStatus`、`useMeasuredHeight`、`formatCompact` 和 `formatBytes`。
 
 [接入指南](docs/integration.md) 说明路由适配、服务端渲染、主题定制和组件约定。[交互示例](demo/main.tsx) 在不依赖 Docusaurus 的环境中展示全部组件。
+
+完整的[使用文档](https://lailai.one/docs/project/ui)包含组件预览、API、主题定制和维护发布流程。
 
 ## 开发
 
